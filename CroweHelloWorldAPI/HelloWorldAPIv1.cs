@@ -8,7 +8,7 @@ namespace CroweHelloWorldAPI
     public class HelloWorldAPIv1 : IHelloWorldAPI
     {
         /// <summary>
-        /// Method to get a message string
+        /// Method to return a message string
         /// </summary>
         /// <returns>Required string value</returns>
         public async Task<string> GetMessageAsync()
