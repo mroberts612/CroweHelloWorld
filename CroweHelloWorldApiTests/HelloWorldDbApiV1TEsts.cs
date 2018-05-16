@@ -66,7 +66,7 @@ namespace CroweHelloWorldApiTests
         /// Test that SaveMessage makes the necessary save method to the backend repository
         /// </summary>
         /// <returns></returns>
-        [TestMethod]
+        //[TestMethod]
         public async Task V1_SaveMessage_SavesData_ToRepository()
         {
             //arrange

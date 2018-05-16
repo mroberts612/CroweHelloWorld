@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
 using CroweHelloWorldAPI;
+using CroweHelloWorldDomainData;
 
 namespace CroweHelloWorldApiTests
 {
@@ -68,13 +69,36 @@ namespace CroweHelloWorldApiTests
         public async Task V1_GetMessage_Returns_CorrectValue()
         {
             //arrange
-            IHelloWorldAPI api = new HelloWorldAPIv1();
+            var mockRepository = new Mock<IHelloWorldRepository>();
+            mockRepository.Setup(m => m.SaveMessageAsync(It.IsAny<string>())).Returns(Task.FromResult(false));
+            IHelloWorldAPI api = new HelloWorldAPIv1(mockRepository.Object);
 
             //act
             string actual = await api.GetMessageAsync();
 
             //assert
             Assert.AreEqual("Hello World", actual);
+        }
+
+        /// <summary>
+        /// Test that SaveMessage makes the necessary save method to the backend repository
+        /// </summary>
+        /// <returns></returns>
+        [TestMethod]
+        public async Task V1_SaveMessage_SavesData_ToRepository()
+        {
+            //arrange
+            var mockRepository = new Mock<IHelloWorldRepository>();
+            mockRepository.Setup(m => m.SaveMessageAsync(It.IsAny<string>())).Returns(Task.FromResult(false));
+            IHelloWorldDbApi api = new HelloWorldDbApiV1(mockRepository.Object);
+
+            string msg = "Hello World";
+
+            //act
+            await api.SaveMessageAsync(msg);
+
+            //assert a call to the repository was made.
+            mockRepository.Verify(mock => mock.SaveMessageAsync(msg), Times.AtMostOnce());
         }
     }
 }

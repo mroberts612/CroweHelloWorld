@@ -20,14 +20,14 @@ namespace CroweHelloWorldConsole
             services.AddTransient<IHelloWorldAPI, HelloWorldAPIv1>();
 
             // include these 2 lines if database support is needed
-            services.AddTransient<IHelloWorldDbApi, HelloWorldDbApiV1>();
+            //services.AddTransient<IHelloWorldDbApi, HelloWorldDbApiV1>();
             services.AddTransient<IHelloWorldRepository, HelloWorldRepositoryFakeDb>();
             var provider = services.BuildServiceProvider();
 
             // Resolve needed services
             IHelloWorldAPI api = provider.GetService<IHelloWorldAPI>();
             // Include these 2 lines if database support is needed
-            IHelloWorldDbApi dbapi = provider.GetService<IHelloWorldDbApi>();
+            //IHelloWorldDbApi dbapi = provider.GetService<IHelloWorldDbApi>();
             IHelloWorldRepository repository = provider.GetService<IHelloWorldRepository>();
 
             try
@@ -35,7 +35,7 @@ namespace CroweHelloWorldConsole
                 Console.WriteLine(await api.GetMessageAsync());
 
                 // include this line if database write is needed.
-                await dbapi.SaveMessageAsync(await api.GetMessageAsync());
+                await api.SaveMessageAsync(await api.GetMessageAsync());
                 Console.WriteLine("Data saved to repository");
             }
             catch (Exception ex)

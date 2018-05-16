@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CroweHelloWorldAPI
 {
-    public interface IHelloWorldAPI
+    public interface IHelloWorldAPI: IHelloWorldDbApi
     {
         Task<string> GetMessageAsync();
     }
